@@ -1,0 +1,61 @@
+"""Main bot entry point for {{ bot_name }}."""
+
+import asyncio
+import logging
+from aiogram import Bot, Dispatcher
+from aiogram.fsm.storage.memory import MemoryStorage
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+# Get bot token
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+if not BOT_TOKEN:
+    raise ValueError("BOT_TOKEN environment variable is required")
+
+# Initialize bot and dispatcher
+bot = Bot(token=BOT_TOKEN)
+storage = MemoryStorage()
+dp = Dispatcher(storage=storage)
+
+# Import and register handlers
+{% for handler in architecture.handlers %}
+try:
+    from handlers.{{ handler }} import router as {{ handler }}_router
+    dp.include_router({{ handler }}_router)
+except ImportError:
+    print(f"Warning: Could not import {{ handler }} handler")
+{% endfor %}
+
+{% if architecture.services %}
+# Import services
+{% for service in architecture.services %}
+from services import {{ service }}
+{% endfor %}
+{% endif %}
+
+
+async def main():
+    """Main bot function."""
+    logger.info("Starting {{ bot_name }} bot...")
+    
+    # Start polling
+    try:
+        await dp.start_polling(bot)
+    except Exception as e:
+        logger.error(f"Error in bot: {e}")
+    finally:
+        await bot.session.close()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

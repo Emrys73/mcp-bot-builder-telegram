@@ -1,0 +1,12 @@
+"""Add command handler."""
+
+from aiogram import Router, types
+from aiogram.filters import Command
+
+router = Router()
+
+
+@router.message(Command("add"))
+async def handler(message: types.Message):
+    """Handle /add command."""
+    await message.answer("➕ Add functionality - Implement your add logic here")

@@ -1,0 +1,11 @@
+"""Handlers package."""
+
+{% for handler in architecture.handlers %}
+from . import {{ handler }}
+{% endfor %}
+
+__all__ = [
+{% for handler in architecture.handlers %}
+    "{{ handler }}",
+{% endfor %}
+]

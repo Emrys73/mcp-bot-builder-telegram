@@ -1,0 +1,21 @@
+"""Database service for {{ bot_name }}."""
+
+import aiosqlite
+import os
+from pathlib import Path
+
+DATABASE_PATH = Path(__file__).parent.parent / "bot.db"
+
+
+async def get_db():
+    """Get database connection."""
+    db = await aiosqlite.connect(DATABASE_PATH)
+    db.row_factory = aiosqlite.Row
+    return db
+
+
+async def init_db():
+    """Initialize database tables."""
+    db = await get_db()
+    # Add your table creation logic here
+    await db.close()

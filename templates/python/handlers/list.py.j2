@@ -1,0 +1,12 @@
+"""List command handler."""
+
+from aiogram import Router, types
+from aiogram.filters import Command
+
+router = Router()
+
+
+@router.message(Command("list"))
+async def handler(message: types.Message):
+    """Handle /list command."""
+    await message.answer("📋 List functionality - Implement your list logic here")

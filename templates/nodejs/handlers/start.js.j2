@@ -1,0 +1,22 @@
+const { Telegraf } = require('telegraf');
+
+module.exports = (bot) => {
+    bot.command('start', (ctx) => {
+        const welcomeText = `👋 Welcome to {{ bot_name }}!
+
+{% if requirements.purpose %}
+{{ requirements.purpose }}
+{% endif %}
+
+{% if commands %}
+Available commands:
+{% for cmd in commands %}
+- /{{ cmd }}
+{% endfor %}
+{% endif %}
+
+Use /help for more information.`;
+        
+        ctx.reply(welcomeText);
+    });
+};

@@ -1,0 +1,30 @@
+"""Help command handler."""
+
+from aiogram import Router, types
+from aiogram.filters import Command
+
+router = Router()
+
+
+@router.message(Command("help"))
+async def handler(message: types.Message):
+    """Handle /help command."""
+    help_text = """📖 Help - {{ bot_name }}
+
+{% if commands %}
+Commands:
+{% for cmd in commands %}
+/{{ cmd }} - {{ cmd|title }} functionality
+{% endfor %}
+{% endif %}
+
+{% if features %}
+Features:
+{% for feature in features %}
+- {{ feature|title }}
+{% endfor %}
+{% endif %}
+
+For support, contact the bot administrator.
+"""
+    await message.answer(help_text)

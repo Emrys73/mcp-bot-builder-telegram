@@ -1,0 +1,33 @@
+const { Telegraf } = require('telegraf');
+require('dotenv').config();
+
+const BOT_TOKEN = process.env.BOT_TOKEN;
+
+if (!BOT_TOKEN) {
+    console.error('BOT_TOKEN environment variable is required');
+    process.exit(1);
+}
+
+const bot = new Telegraf(BOT_TOKEN);
+
+// Import and register handlers
+{% for handler in architecture.handlers %}
+try {
+    const {{ handler }}Handler = require('./handlers/{{ handler }}');
+    {{ handler }}Handler(bot);
+} catch (error) {
+    console.error(`Error loading {{ handler }} handler:`, error);
+}
+{% endfor %}
+
+// Start bot
+bot.launch().then(() => {
+    console.log('{{ bot_name }} bot is running...');
+}).catch((error) => {
+    console.error('Error starting bot:', error);
+    process.exit(1);
+});
+
+// Graceful shutdown
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));

@@ -1,0 +1,12 @@
+"""Payment service for {{ bot_name }}."""
+
+import os
+
+PAYMENT_PROVIDER = os.getenv("PAYMENT_PROVIDER", "")
+PAYMENT_API_KEY = os.getenv("PAYMENT_API_KEY", "")
+
+
+async def process_payment(amount: float, currency: str = "USD"):
+    """Process payment."""
+    # Implement payment processing logic here
+    pass

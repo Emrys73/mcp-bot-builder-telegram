@@ -1,0 +1,11 @@
+"""Scheduler service for {{ bot_name }}."""
+
+import asyncio
+from datetime import datetime, timedelta
+
+
+async def schedule_reminder(user_id: int, message: str, delay_seconds: int):
+    """Schedule a reminder."""
+    await asyncio.sleep(delay_seconds)
+    # Send reminder logic here
+    pass

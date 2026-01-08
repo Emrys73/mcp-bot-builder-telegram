@@ -1,0 +1,12 @@
+"""Update command handler."""
+
+from aiogram import Router, types
+from aiogram.filters import Command
+
+router = Router()
+
+
+@router.message(Command("update"))
+async def handler(message: types.Message):
+    """Handle /update command."""
+    await message.answer("✏️ Update functionality - Implement your update logic here")

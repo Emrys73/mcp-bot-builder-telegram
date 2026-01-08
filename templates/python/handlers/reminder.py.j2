@@ -1,0 +1,12 @@
+"""Reminder command handler."""
+
+from aiogram import Router, types
+from aiogram.filters import Command
+
+router = Router()
+
+
+@router.message(Command("reminder"))
+async def handler(message: types.Message):
+    """Handle /reminder command."""
+    await message.answer("⏰ Reminder functionality - Implement your reminder logic here")

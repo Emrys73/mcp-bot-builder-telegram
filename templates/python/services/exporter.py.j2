@@ -1,0 +1,13 @@
+"""Export service for {{ bot_name }}."""
+
+import pandas as pd
+from io import BytesIO
+
+
+async def export_to_csv(data: list, filename: str = "export.csv") -> BytesIO:
+    """Export data to CSV."""
+    df = pd.DataFrame(data)
+    buffer = BytesIO()
+    df.to_csv(buffer, index=False)
+    buffer.seek(0)
+    return buffer

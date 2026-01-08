@@ -1,0 +1,12 @@
+"""Search command handler."""
+
+from aiogram import Router, types
+from aiogram.filters import Command
+
+router = Router()
+
+
+@router.message(Command("search"))
+async def handler(message: types.Message):
+    """Handle /search command."""
+    await message.answer("🔍 Search functionality - Implement your search logic here")

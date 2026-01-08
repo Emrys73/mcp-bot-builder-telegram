@@ -1,0 +1,16 @@
+"""Services package."""
+
+{% if architecture.services %}
+{% for service in architecture.services %}
+from . import {{ service }}
+{% endfor %}
+
+__all__ = [
+{% for service in architecture.services %}
+    "{{ service }}",
+{% endfor %}
+]
+{% else %}
+# No services
+__all__ = []
+{% endif %}

@@ -1,0 +1,12 @@
+"""Delete command handler."""
+
+from aiogram import Router, types
+from aiogram.filters import Command
+
+router = Router()
+
+
+@router.message(Command("delete"))
+async def handler(message: types.Message):
+    """Handle /delete command."""
+    await message.answer("🗑️ Delete functionality - Implement your delete logic here")

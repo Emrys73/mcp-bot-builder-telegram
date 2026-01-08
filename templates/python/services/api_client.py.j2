@@ -1,0 +1,17 @@
+"""API client service for {{ bot_name }}."""
+
+import aiohttp
+import os
+
+API_KEY = os.getenv("API_KEY", "")
+
+
+async def fetch_data(url: str, params: dict = None):
+    """Fetch data from API."""
+    async with aiohttp.ClientSession() as session:
+        headers = {}
+        if API_KEY:
+            headers["Authorization"] = f"Bearer {API_KEY}"
+        
+        async with session.get(url, headers=headers, params=params) as response:
+            return await response.json()
