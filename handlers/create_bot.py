@@ -11,7 +11,7 @@ from services.generator import CodeGenerator
 from services.file_manager import FileManager
 from services.deployment import DeploymentService
 from services.registry import BotRegistry
-from utils.formatters import format_bot_overview, format_success_message, format_error_message
+from utils.formatters import format_bot_overview, format_success_message, format_error_message, escape_markdown
 from config import MAX_BOTS_PER_USER
 
 router = Router()
@@ -175,14 +175,15 @@ async def process_token(message: types.Message, state: FSMContext):
         
         # Success message
         overview = format_bot_overview(bot_name, requirements, architecture)
+        safe_bot_name = escape_markdown(bot_name)
         success_msg = (
             f"{overview}\n\n"
             f"✅ **Bot deployed successfully!**\n\n"
             f"Your bot is now running. You can interact with it using the token you provided.\n\n"
-            f"**Bot Name:** `{bot_name}`\n"
+            f"**Bot Name:** `{safe_bot_name}`\n"
             f"**Status:** Running\n"
             f"**Container ID:** `{container_id[:12]}`\n\n"
-            f"Use `/list` to see all your bots or `/status {bot_name}` to check status."
+            f"Use `/list` to see all your bots or `/status {safe_bot_name}` to check status."
         )
         
         await processing_msg.edit_text(success_msg, parse_mode="Markdown")

@@ -5,38 +5,57 @@ from services.parser import BotRequirements
 from services.analyzer import BotArchitecture
 
 
+def escape_markdown(text: str) -> str:
+    """Escape Markdown special characters to prevent parsing errors."""
+    if not text:
+        return ""
+    # Escape Markdown special characters
+    escape_chars = ['*', '_', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!']
+    for char in escape_chars:
+        text = text.replace(char, f'\\{char}')
+    return text
+
+
 def format_bot_overview(
     bot_name: str,
     requirements: BotRequirements,
     architecture: BotArchitecture
 ) -> str:
     """Format bot overview message."""
+    # Escape user-provided content to prevent Markdown parsing errors
+    safe_bot_name = escape_markdown(bot_name)
+    safe_purpose = escape_markdown(requirements.purpose)
+    
     lines = [
-        f"🤖 **Bot Overview: {bot_name}**",
+        f"🤖 **Bot Overview: {safe_bot_name}**",
         "",
-        f"**Purpose:** {requirements.purpose}",
+        f"**Purpose:** {safe_purpose}",
         "",
     ]
     
     if requirements.features:
         lines.append("**Features:**")
         for feature in requirements.features:
-            lines.append(f"  • {feature.title()}")
+            safe_feature = escape_markdown(feature.title())
+            lines.append(f"  • {safe_feature}")
         lines.append("")
     
     if requirements.commands:
         lines.append("**Commands:**")
         for cmd in requirements.commands:
-            lines.append(f"  • /{cmd}")
+            safe_cmd = escape_markdown(cmd)
+            lines.append(f"  • /{safe_cmd}")
         lines.append("")
     
     if requirements.integrations:
         lines.append("**Integrations:**")
         for integration in requirements.integrations:
-            lines.append(f"  • {integration.title()}")
+            safe_integration = escape_markdown(integration.title())
+            lines.append(f"  • {safe_integration}")
         lines.append("")
     
-    lines.append(f"**Language:** {requirements.language.title()}")
+    safe_language = escape_markdown(requirements.language.title())
+    lines.append(f"**Language:** {safe_language}")
     
     return "\n".join(lines)
 
@@ -50,7 +69,8 @@ def format_deployment_status(bot_name: str, status: str, container_id: str = Non
         "building": "🔨",
     }.get(status, "❓")
     
-    message = f"{status_emoji} **Bot: {bot_name}**\n"
+    safe_bot_name = escape_markdown(bot_name)
+    message = f"{status_emoji} **Bot: {safe_bot_name}**\n"
     message += f"Status: {status.title()}\n"
     
     if container_id:
@@ -74,14 +94,16 @@ def format_bot_list(bots: Dict[str, Dict]) -> str:
             "error": "🔴",
         }.get(status, "⚪")
         
-        lines.append(f"{status_emoji} **{bot_name}** - {status.title()}")
+        safe_bot_name = escape_markdown(bot_name)
+        lines.append(f"{status_emoji} **{safe_bot_name}** - {status.title()}")
     
     return "\n".join(lines)
 
 
 def format_error_message(error: str) -> str:
     """Format error message."""
-    return f"❌ **Error:** {error}\n\nPlease try again or contact support."
+    safe_error = escape_markdown(str(error))
+    return f"❌ **Error:** {safe_error}\n\nPlease try again or contact support."
 
 
 def format_success_message(message: str) -> str:
