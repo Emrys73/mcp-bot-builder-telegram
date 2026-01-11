@@ -4,12 +4,12 @@ BotBuilder is an intelligent Telegram bot that automatically generates, deploys,
 
 ## Features
 
-- 🤖 **Automatic Bot Generation**: Create complete Telegram bots from natural language descriptions
-- 🐳 **Docker Deployment**: Each bot runs in its own isolated Docker container
-- 📝 **Smart Code Generation**: Generates production-ready code with proper structure
-- 🔧 **Bot Management**: List, start, stop, and monitor your deployed bots
-- 🎯 **Multiple Frameworks**: Supports Python (aiogram) and Node.js (telegraf)
-- 🔒 **Secure**: Environment variables for tokens, isolated containers
+- **Automatic Bot Generation**: Create complete Telegram bots from natural language descriptions
+- **Docker Deployment**: Each bot runs in its own isolated Docker container
+- **Smart Code Generation**: Generates production-ready code with proper structure
+- **Bot Management**: List, start, stop, and monitor your deployed bots
+- **Multiple Frameworks**: Supports Python (aiogram) and Node.js (telegraf)
+- **Secure**: Environment variables for tokens, isolated containers
 
 ## Architecture
 
@@ -83,7 +83,7 @@ BotBuilder: What's the bot name?
 User: expense_tracker
 BotBuilder: Provide bot token from @BotFather
 User: 123456:ABC-DEF...
-BotBuilder: ✅ Bot deployed successfully!
+BotBuilder: Bot deployed successfully!
 ```
 
 ## Commands
